@@ -1,15 +1,12 @@
 import React from "react";
-import Link from "next/link";
+import ProductItemList from "../src/components/products/ProductItemList";
+import SelectedProductItemList from "../src/components/products/SelectedProductItemList";
 
 const products = () => {
   return (
     <div>
-      <div>여기 상품 목록</div>
-      <Link href="wishlist">
-        <a>
-          <button>장바구니로 이동</button>
-        </a>
-      </Link>
+      <ProductItemList />
+      <SelectedProductItemList />
     </div>
   );
 };
