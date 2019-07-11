@@ -1,5 +1,4 @@
 import React from 'react'
-import console = require('console');
 
 const ChooseCoupon = () => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IProductItem } from "../../../states/state";
+import { IProductItemState } from "../../../states/state";
 
 const SProduct = styled.div`
   float: left;
@@ -22,13 +22,7 @@ const ProductImage = styled.img`
 `;
 
 interface Props {
-  item: {
-    id: string;
-    selected: boolean;
-    checked: boolean;
-    quantity: number;
-    value: IProductItem;
-  };
+  item: IProductItemState;
   onSelect: any;
 }
 
