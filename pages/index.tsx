@@ -1,29 +1,19 @@
 import React from "react";
 import Link from "next/link";
-import styled from "styled-components";
-
+import { NextPage } from "next";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { updateAnnouncement } from "../states/announcement/actions";
-import { NextPage } from "next";
-
-const Title = styled.h1`
-  color: red;
-  font-size: 50px;
-`;
+import * as actions from "../states/actions";
 
 interface Props {
-  announcementMessage: string;
+  message: string;
   updateAnnouncement: any;
 }
 
-const index: NextPage<Props> = ({
-  announcementMessage,
-  updateAnnouncement
-}) => {
+const index: NextPage<Props> = ({ message, updateAnnouncement }) => {
   return (
     <>
-      <Title>class101 과제</Title>
+      <h1>class101 과제</h1>
       <div>
         <Link
           href={{
@@ -43,7 +33,7 @@ const index: NextPage<Props> = ({
         </Link>
       </div>
       <div>
-        Announcement: {announcementMessage}
+        Announcement: {message}
         <button onClick={() => updateAnnouncement("We are closed today!")}>
           Close!
         </button>
@@ -53,11 +43,11 @@ const index: NextPage<Props> = ({
 };
 
 const mapStateToProps = (state: any) => ({
-  announcementMessage: state.message
+  message: state.message
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  updateAnnouncement: bindActionCreators(updateAnnouncement, dispatch)
+  updateAnnouncement: bindActionCreators(actions.updateAnnouncement, dispatch)
 });
 
 export default connect(

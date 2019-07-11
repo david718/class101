@@ -1,39 +1,52 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledProduct = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 24px;
+import { IProductItem } from "../../../states/state";
+
+const SProduct = styled.div`
+  float: left;
+  width: 200px;
+  margin-left: 15px;
 `;
 
-const ProductImage = styled.div`
+const ProductImage = styled.img`
   @media (max-width: 992px) {
     width: 160px;
     height: 160px;
     margin-right: 8px;
   }
-  width: 240px;
-  height: 240px;
-  background-size: contain;
+  width: 190px;
+  height: 190px;
   border-radius: 6px;
   margin-bottom: 8px;
-  margin-right: 10px;
 `;
 
 interface Props {
-  title: string;
-  coverImage: string;
-  price: number;
+  item: {
+    id: string;
+    selected: boolean;
+    checked: boolean;
+    quantity: number;
+    value: IProductItem;
+  };
+  onSelect: any;
 }
 
-const ProductItem: React.SFC<Props> = ({ title, coverImage, price }) => {
+const ProductItem: React.SFC<Props> = ({ item, onSelect }) => {
+  const { id, selected, value } = item;
+  const { coverImage, title, price } = value;
+
+  const handleClick = () => {
+    onSelect(id)
+  }
+
   return (
-    <StyledProduct>
-      <ProductImage style={{ backgroundImage: `url("${coverImage}")` }} />
+    <SProduct>
+      <ProductImage src={coverImage} />
       <div>{title}</div>
       <div>{price}원</div>
-    </StyledProduct>
+      <button onClick={handleClick}>{selected? '빼기': '담기'}</button>
+    </SProduct>
   );
 };
 
