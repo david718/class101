@@ -16,13 +16,25 @@ const SProductList = styled.div`
   width: 1100px;
 `;
 
-const ProductItemList: React.SFC<Props> = ({ page, productItemArr, onSelect }) => {
-  const productItemTagList = productItemArr.slice(0,5).map(item => {
+const ProductItemList: React.SFC<Props> = ({
+  page,
+  productItemArr,
+  onSelect
+}) => {
+  //pagination 아직 구현 못했습니다
+  const selectedProductItemArr = productItemArr.filter(
+    productItem => productItem.selected
+  );
+
+  console.log(selectedProductItemArr);
+
+  const productItemTagList = productItemArr.slice(0, 5).map(item => {
     return (
       <ProductItem
         key={item.id}
         item={item}
         onSelect={onSelect}
+        limit={selectedProductItemArr.length}
       />
     );
   });

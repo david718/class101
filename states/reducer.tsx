@@ -33,30 +33,36 @@ export const reducer = (state = initialState, action: any) => {
         productItemArr: selectedProductItemArr
       };
 
-    // case types.ITEM_CHECK:
-    //   const checkedProductItemArr = changeProductItemState(
-    //     productItemStatesArr,
-    //     action.id,
-    //     "checked",
-    //     undefined
-    //   );
-    //   return {
-    //     ...state,
-    //     productItemArr: checkedProductItemArr
-    //   };
+    case types.ITEM_CHECK:
+      const checkedProductItemArr = changeProductItemState(
+        productItemStatesArr,
+        action.id,
+        "checked",
+        undefined
+      );
+      return {
+        ...state,
+        productItemArr: checkedProductItemArr
+      };
 
-    // case types.ITEM_QUANTITY_CHANGE:
-    //   const quantityChangedProductItemArr = changeProductItemState(
-    //     productItemStatesArr,
-    //     action.id,
-    //     "quantity",
-    //     action.quantityValue
-    //   );
-    //   return {
-    //     ...state,
-    //     productItemArr: quantityChangedProductItemArr
-    //   };
-      
+    case types.ITEM_QUANTITY_CHANGE:
+      const quantityChangedProductItemArr = changeProductItemState(
+        productItemStatesArr,
+        action.id,
+        "quantity",
+        action.quantityValue
+      );
+      return {
+        ...state,
+        productItemArr: quantityChangedProductItemArr
+      };
+
+    case types.COUPON_CHANGE:
+      return {
+        ...state,
+        couponType: action.couponType
+      };
+
     default:
       return state;
   }

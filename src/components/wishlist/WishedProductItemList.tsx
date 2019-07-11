@@ -8,19 +8,28 @@ import WishedProductItem from "./WishedProductItem";
 interface Props {
   productItemArr: Array<IProductItemState>;
   couponType: "none" | "rate" | "amount";
+  onCheck: any;
   onQuantity: any;
 }
 
 const WishedProductItemList: React.SFC<Props> = ({
   productItemArr,
-  couponType
+  couponType,
+  onCheck,
+  onQuantity
 }) => {
   const selectedProductItemArr = productItemArr.filter(
     productItem => productItem.selected
   );
   const wishedProductItemTagList = selectedProductItemArr.map(item => {
     return (
-      <WishedProductItem key={item.id} item={item} couponType={couponType} />
+      <WishedProductItem
+        key={item.id}
+        item={item}
+        onCheck={onCheck}
+        onQuantity={onQuantity}
+        couponType={couponType}
+      />
     );
   });
   return (
@@ -37,6 +46,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
+  onCheck: bindActionCreators(actions.check, dispatch),
   onQuantity: bindActionCreators(actions.quantityChange, dispatch)
 });
 
