@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IProductItem } from "../../../states/state";
+import { IProductItemState } from "../../../states/state";
 
 const SProduct = styled.div`
   float: left;
@@ -22,30 +22,37 @@ const ProductImage = styled.img`
 `;
 
 interface Props {
-  item: {
-    id: string;
-    selected: boolean;
-    checked: boolean;
-    quantity: number;
-    value: IProductItem;
-  };
+  item: IProductItemState;
   onSelect: any;
+  limit: number;
 }
 
-const ProductItem: React.SFC<Props> = ({ item, onSelect }) => {
+const ProductItem: React.SFC<Props> = ({ item, onSelect, limit }) => {
   const { id, selected, value } = item;
   const { coverImage, title, price } = value;
 
-  const handleClick = () => {
-    onSelect(id)
-  }
+  console.log(limit);
+  const handleClick = (e: any) => {
+    if (limit < 3) {
+      onSelect(id);
+    } else {
+      if (selected) {
+        onSelect(id);
+      } else {
+        e.preventDefault();
+        alert("장바구니가 꽉찼습니다");
+      }
+    }
+  };
 
   return (
     <SProduct>
       <ProductImage src={coverImage} />
       <div>{title}</div>
       <div>{price}원</div>
-      <button onClick={handleClick}>{selected? '빼기': '담기'}</button>
+      <button onClick={(e: any) => handleClick(e)}>
+        {selected ? "빼기" : "담기"}
+      </button>
     </SProduct>
   );
 };

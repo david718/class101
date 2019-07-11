@@ -1,61 +1,56 @@
 import React from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../../../states/actions";
 import { IProductItemState } from "../../../states/state";
-import ProductItem from "./ProductItem";
+import WishedProductItem from "./WishedProductItem";
 
 interface Props {
-  page: number;
   productItemArr: Array<IProductItemState>;
-  onSelect: any;
+  couponType: "none" | "rate" | "amount";
+  onCheck: any;
+  onQuantity: any;
 }
 
-const SProductList = styled.div`
-  width: 1100px;
-`;
-
-const ProductItemList: React.SFC<Props> = ({
-  page,
+const WishedProductItemList: React.SFC<Props> = ({
   productItemArr,
-  onSelect
+  couponType,
+  onCheck,
+  onQuantity
 }) => {
-  //pagination 아직 구현 못했습니다
   const selectedProductItemArr = productItemArr.filter(
     productItem => productItem.selected
   );
-
-  console.log(selectedProductItemArr);
-
-  const productItemTagList = productItemArr.slice(0, 5).map(item => {
+  const wishedProductItemTagList = selectedProductItemArr.map(item => {
     return (
-      <ProductItem
+      <WishedProductItem
         key={item.id}
         item={item}
-        onSelect={onSelect}
-        limit={selectedProductItemArr.length}
+        onCheck={onCheck}
+        onQuantity={onQuantity}
+        couponType={couponType}
       />
     );
   });
   return (
     <div>
-      <h2>수업 목록{page}</h2>
-      <SProductList>{productItemTagList}</SProductList>
+      <h2>장바구니 상품 목록</h2>
+      <div>{wishedProductItemTagList}</div>
     </div>
   );
 };
 
 const mapStateToProps = (state: any) => ({
-  page: state.page,
-  productItemArr: state.productItemArr
+  productItemArr: state.productItemArr,
+  couponType: state.couponType
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  onSelect: bindActionCreators(actions.select, dispatch)
+  onCheck: bindActionCreators(actions.check, dispatch),
+  onQuantity: bindActionCreators(actions.quantityChange, dispatch)
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProductItemList);
+)(WishedProductItemList);

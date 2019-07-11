@@ -11,7 +11,7 @@ export interface IProductItemState {
   id: string;
   selected: boolean;
   checked: boolean;
-  quantity: number;
+  quantity: number | undefined;
   value: IProductItem;
 }
 

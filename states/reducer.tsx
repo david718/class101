@@ -1,13 +1,14 @@
 import { IState } from "./state";
 import * as types from "./actionTypes";
 import { productItems } from "../src/assets/productItems";
+import { changeProductItemState } from "../utils/";
 
 const productItemStatesArr = productItems.map(productItem => {
   return {
     id: productItem.id,
     selected: false,
     checked: false,
-    quantity: 0,
+    quantity: 1,
     value: productItem
   };
 });
@@ -20,24 +21,48 @@ const initialState: IState = {
 
 export const reducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case types.UPDATE_ANNOUNCEMENT:
-      return Object.assign({}, state, { message: action.message });
-
     case types.ITEM_SELECT:
-      const toggledProductItemArr = productItemStatesArr.map(
-        productItemState => {
-          if (productItemState.id === action.id) {
-            productItemState.selected = !productItemState.selected;
-            return productItemState;
-          }
-          return productItemState;
-        }
+      const selectedProductItemArr = changeProductItemState(
+        productItemStatesArr,
+        action.id,
+        "selected",
+        undefined
       );
-
       return {
         ...state,
-        productItemArr: toggledProductItemArr
+        productItemArr: selectedProductItemArr
       };
+
+    case types.ITEM_CHECK:
+      const checkedProductItemArr = changeProductItemState(
+        productItemStatesArr,
+        action.id,
+        "checked",
+        undefined
+      );
+      return {
+        ...state,
+        productItemArr: checkedProductItemArr
+      };
+
+    case types.ITEM_QUANTITY_CHANGE:
+      const quantityChangedProductItemArr = changeProductItemState(
+        productItemStatesArr,
+        action.id,
+        "quantity",
+        action.quantityValue
+      );
+      return {
+        ...state,
+        productItemArr: quantityChangedProductItemArr
+      };
+
+    case types.COUPON_CHANGE:
+      return {
+        ...state,
+        couponType: action.couponType
+      };
+
     default:
       return state;
   }
