@@ -5,5 +5,5 @@
 
 ## How to use it?
 
-yarn dev
+npm run dev
 
