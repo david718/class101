@@ -4,15 +4,11 @@ import { getDiscount } from "../../../utils/";
 
 interface Props {
   item: IProductItemState;
-  onCheck: any;
-  onQuantity: any;
   couponType: "none" | "rate" | "amount";
 }
 
 const WishedProductItem: React.SFC<Props> = ({
   item,
-  onCheck,
-  onQuantity,
   couponType
 }) => {
   const { id, checked, quantity, value } = item;
@@ -24,13 +20,13 @@ const WishedProductItem: React.SFC<Props> = ({
 
   return (
     <div>
-      <input type="checkbox" checked={checked} onChange={onCheck(id)} />
+      <input type="checkbox" checked={checked}  />
       <span>
-        <img src={coverImage} />
+        <img style={{width: 140, height: 140}} src={coverImage} />
       </span>
-      <span>{title}</span>
+      <span>{title}{id}</span>
       <span>
-        <select value={quantity} onChange={onQuantity(id)}>
+        <select value={quantity}>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
