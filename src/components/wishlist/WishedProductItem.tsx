@@ -1,5 +1,6 @@
 import React from "react";
 import { IProductItemState } from "../../../states/state";
+import coupons from "../../assets/coupons";
 
 interface Props {
   item: IProductItemState;
@@ -26,18 +27,33 @@ const WishedProductItem: React.SFC<Props> = ({
         discount = 0;
         resultPrice = quantity * price;
       } else if (couponType === "rate") {
-        discount = Math.floor(quantity * price * 0.1);
-        resultPrice = quantity * price - discount;
+        coupons.forEach(coupon => {
+          if (coupon.type === couponType) {
+            if (coupon.discountRate !== undefined) {
+              discount = Math.floor(
+                (quantity * price * coupon.discountRate) / 100
+              );
+              resultPrice = quantity * price - discount;
+            }
+          }
+        });
       } else if (couponType === "amount") {
-        discount = quantity * 10000;
-        resultPrice = quantity * price - discount;
+        coupons.forEach(coupon => {
+          if (coupon.type === couponType) {
+            if (coupon.discountAmount !== undefined) {
+              discount = quantity * coupon.discountAmount;
+              resultPrice = quantity * price - discount;
+            }
+          }
+        });
       }
     } else {
       discount = 0;
       resultPrice = quantity * price;
     }
   }
-  console.log(item.checked);
+  console.log(resultPrice, "resultPrice");
+  console.log(discount, "discount");
 
   return (
     <div>

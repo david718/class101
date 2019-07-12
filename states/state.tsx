@@ -18,7 +18,5 @@ export interface IProductItemState {
 export interface IState {
   page: number;
   productItemArr: Array<IProductItemState> | void[];
-  seletedArr: Array<string>;
-  checkedArr: Array<{id: string, quantity: number}>;
   couponType: "none" | "rate" | "amount";
 }
