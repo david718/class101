@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { IProductItemState } from "../../../states/state";
+import { coupons } from "../../assets";
 
 interface Props {
   couponType: "none" | "rate" | "amount";
@@ -15,7 +16,7 @@ const TotalPrice: React.SFC<Props> = ({ couponType, productItemArr }) => {
   });
 
   let totalPrice = 0;
- 
+
   checkedItemArr.forEach(item => {
     if (item !== undefined) {
       const { quantity, value } = item;
@@ -26,10 +27,19 @@ const TotalPrice: React.SFC<Props> = ({ couponType, productItemArr }) => {
           if (couponType === "none") {
             totalPrice += quantity * price;
           } else if (couponType === "rate") {
-            totalPrice +=
-              quantity * (Math.floor(price * 0.9));
+            coupons.forEach((coupon: any) => {
+              if ((coupon.type = couponType)) {
+                totalPrice +=
+                  quantity * Math.floor(price * (1 - coupon.discountRate));
+              }
+            });
           } else if (couponType === "amount") {
-            totalPrice += quantity * (price - 10000);
+            coupons.forEach((coupon: any) => {
+              if ((coupon.type = couponType)) {
+                totalPrice += quantity * (price - coupon.discountAmount);
+              }
+            })
+            
           }
         } else {
           totalPrice += quantity * price;
