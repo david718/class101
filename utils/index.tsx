@@ -20,23 +20,36 @@ export const changeProductItemState = (
   });
 };
 
-export const getDiscount = (couponType:string, quantity: number, price: number):object => {
-  let discount = 0; 
-  let resultPrice;
+export const getDiscountAndResultPrice = (
+  couponType: "rate" | "amount",
+  quantity: number,
+  price: number
+): { discount: number; resultPrice: number } => {
+  let discount = 0;
+  let resultPrice = 0;
 
-  coupons.forEach(coupon => {
-    if (coupon.type === couponType) {
-      if (coupon.discountRate !== undefined) {
-        discount = Math.floor(
-          (quantity * price * coupon.discountRate) / 100
-        );
-        resultPrice = quantity * price - discount;
+  if (couponType === "rate") {
+    coupons.forEach(coupon => {
+      if (coupon.type === couponType) {
+        if (coupon.discountRate !== undefined) {
+          discount = Math.floor((quantity * price * coupon.discountRate) / 100);
+          resultPrice = quantity * price - discount;
+        }
       }
-    }
-  });
+    });
+  } else if (couponType === "amount") {
+    coupons.forEach(coupon => {
+      if (coupon.type === couponType) {
+        if (coupon.discountAmount !== undefined) {
+          discount = quantity * coupon.discountAmount;
+          resultPrice = quantity * price - discount;
+        }
+      }
+    });
+  }
 
   return {
     discount: discount,
-    resultPrice: resultPrice,
-  }
-}
+    resultPrice: resultPrice
+  };
+};
