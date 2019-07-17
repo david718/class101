@@ -46,5 +46,4 @@
     ├── store.tsx                          # redux의 store 생성
     ├── tsconfig.json
     └── yarn.lock
-
     
