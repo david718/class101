@@ -1,11 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { IProductItemState } from "../../../states/state";
-<<<<<<< HEAD
 import { coupons } from "../../assets";
-=======
-import coupons from "../../assets/coupons";
->>>>>>> 93190ce4995142a4f1fd775f855aa680f6696931
+
+interface ICoupon {
+  type: string;
+  title: string;
+  discountRate?: number;
+  discountAmount?: number;
+}
 
 interface Props {
   couponType: "none" | "rate" | "amount";
@@ -31,22 +34,7 @@ const TotalPrice: React.SFC<Props> = ({ couponType, productItemArr }) => {
           if (couponType === "none") {
             totalPrice += quantity * price;
           } else if (couponType === "rate") {
-<<<<<<< HEAD
-            coupons.forEach((coupon: any) => {
-              if ((coupon.type = couponType)) {
-                totalPrice +=
-                  quantity * Math.floor(price * (1 - coupon.discountRate));
-              }
-            });
-          } else if (couponType === "amount") {
-            coupons.forEach((coupon: any) => {
-              if ((coupon.type = couponType)) {
-                totalPrice += quantity * (price - coupon.discountAmount);
-              }
-            })
-            
-=======
-            coupons.forEach(coupon => {
+            coupons.forEach((coupon: ICoupon) => {
               if (coupon.type === couponType) {
                 if (coupon.discountRate !== undefined) {
                   totalPrice +=
@@ -56,14 +44,13 @@ const TotalPrice: React.SFC<Props> = ({ couponType, productItemArr }) => {
               }
             });
           } else if (couponType === "amount") {
-            coupons.forEach(coupon => {
+            coupons.forEach((coupon:ICoupon) => {
               if (coupon.type === couponType) {
                 if (coupon.discountAmount !== undefined) {
                   totalPrice += quantity * (price - coupon.discountAmount);
                 }
               }
             });
->>>>>>> 93190ce4995142a4f1fd775f855aa680f6696931
           }
         } else {
           totalPrice += quantity * price;
