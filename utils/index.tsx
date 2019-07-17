@@ -1,5 +1,5 @@
 import { IProductItemState } from "../states/state";
-import {coupons} from "../src/assets";
+import { coupons } from "../src/assets";
 
 export const changeProductItemState = (
   productItemStatesArr: Array<IProductItemState>,
